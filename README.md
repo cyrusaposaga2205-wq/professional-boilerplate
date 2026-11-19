@@ -291,3 +291,36 @@ A boilerplate provides developers with a reusable foundation for building backen
 
 I can improve this project by implementing authentication and authorization using JWT, adding automated unit and integration tests, improving API documentation with Swagger, implementing pagination and filtering, and adding more advanced security features. I can also improve the database seeding process and introduce continuous integration and deployment workflows.
 
+## Reflection Questions
+
+### 1. What was the most challenging part of building this boilerplate? How did you overcome it?
+
+The most challenging part of building this boilerplate was understanding how the different parts of the backend work together, especially the database configuration, migrations, middleware, and error handling. At first, it was difficult to understand how requests move from routes to controllers and services before reaching the database. I overcame this by following the implementation step by step, reviewing the code, testing the endpoints, and fixing errors whenever they appeared. Through this process, I gained a better understanding of how to organize a backend project properly.
+
+### 2. How does this boilerplate differ from your Midterm project? What specific improvements did you make?
+
+Compared to my Midterm project, this boilerplate has a more organized and professional backend structure. Instead of placing most of the logic in a single file or having less organized code, I separated the application into different folders such as controllers, routes, services, entities, DTOs, middleware, and configuration. I also implemented TypeScript for better type safety, Joi for request validation, centralized error handling, Winston for structured logging, and database migrations and seeders. These improvements make the project easier to maintain, understand, test, and expand.
+
+### 3. Why is centralized error handling better than try-catch in every controller?
+
+Centralized error handling is better because it avoids repeating the same error-handling code in every controller. Instead of writing multiple try-catch blocks, errors can be passed to one error-handling middleware that manages them consistently. It also makes the code cleaner and easier to maintain. Most importantly, it helps provide consistent error responses to clients while preventing sensitive technical information from being exposed.
+
+### 4. How does request validation with Joi improve security and code quality?
+
+Joi improves security and code quality by checking incoming data before it reaches the main application logic. It ensures that required fields are present and that values follow the expected format and data types. For example, when creating a user, Joi can validate the email format, name, and password requirements. This helps prevent invalid or unexpected data from entering the application, reduces errors, and makes the code more reliable.
+
+### 5. What's the difference between synchronize: true and migrations? Why are migrations essential for production?
+
+The difference is that `synchronize: true` automatically updates the database schema based on the entities in the application, while migrations allow developers to manually define and control database changes. Synchronization may be convenient during development, but it can cause unexpected changes or data loss in an existing database. Migrations are essential in production because they provide a controlled and trackable way to update database structures. They also make it easier to apply consistent database changes across different environments.
+
+### 6. How does structured logging (Winston) help in production debugging compared to console.log?
+
+Winston provides more organized and detailed logs compared to using `console.log`. It supports different log levels such as error, warn, info, and debug, making it easier to identify important events and problems. It can also include timestamps and additional information and save logs to files. This is useful in production because developers can investigate errors, monitor application activities, and understand what happened without relying only on simple console messages.
+
+### 7. If you had to add a new feature (e.g., Product CRUD), how would you use this boilerplate? What would you need to add?
+
+If I had to add a Product CRUD feature, I would follow the existing project structure to keep the code organized and consistent. First, I would create a Product entity to define the database structure. Next, I would create a Product DTO for validating incoming data using Joi. I would also add a Product service for handling business logic, a Product controller for processing requests, and a Product route for defining the API endpoints. After that, I would create a database migration for the products table and connect the new routes to the main application. Finally, I would test the endpoints to make sure that creating, reading, updating, and deleting products work correctly.
+
+### 8. What additional features would you add to make this boilerplate even more production-ready?
+
+To make this boilerplate more production-ready, I would add authentication and authorization using JWT and role-based access control. I would also implement automated testing using tools such as Jest, rate limiting to protect the API from excessive
