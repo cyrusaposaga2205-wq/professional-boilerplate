@@ -22,12 +22,22 @@ export const validate = (
                 type: detail.type,
             }));
 
-            const message = details.map(d => d.message).join(', ');
-            
+            const message = details.map((d) => d.message).join(', ');
+
             throw new ValidationError(message, details);
         }
 
-        req[source] = value;
+        if (source === 'query') {
+            Object.defineProperty(req, 'query', {
+                value,
+                writable: true,
+                configurable: true,
+                enumerable: true,
+            });
+        } else {
+            req[source] = value;
+        }
+
         next();
     };
 };
