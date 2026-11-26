@@ -44,12 +44,21 @@ export class AuthService {
         name: true,
         password: true,
         isActive: true,
+        isVerified: true,
       },
     });
 
     if (!user) {
       logger.warn('Login attempt with non-existent email', { email });
       throw new UnauthorizedError('Invalid email or password');
+    }
+
+    // Check if email is verified
+    if (!user.isVerified) {
+      logger.warn('Login attempt for unverified account', { email });
+      throw new UnauthorizedError(
+        'Please verify your email address before logging in. Check your inbox for the verification link.'
+      );
     }
 
     // 2. Check if user is active
@@ -105,7 +114,7 @@ export class AuthService {
       }
       throw new UnauthorizedError('Authentication failed');
     }
-  } // <-- Added missing closing brace
+  }
 
   /**
    * Get user from token (useful for getting full user data)

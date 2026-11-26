@@ -4,12 +4,17 @@ import { validate } from '../middleware/validate';
 import { loginSchema } from '../dto/auth.dto';
 import { asyncHandler } from '../utils/asyncHandler';
 import { authMiddleware } from '../middleware/auth';
+import { verificationRoutes } from './verificationRoutes';  // ← Add this
 
 
 export const authRoutes = Router();
 
 
-// POST /api/auth/login - Public endpoint
+// Mount verification routes
+authRoutes.use('/', verificationRoutes);  // ← Add this
+
+
+// POST /api/auth/login
 authRoutes.post(
    '/login',
    validate(loginSchema),
@@ -17,10 +22,9 @@ authRoutes.post(
 );
 
 
-// GET /api/auth/me - Protected endpoint (requires token)
+// GET /api/auth/me
 authRoutes.get(
    '/me',
    authMiddleware,
    asyncHandler(AuthController.getMe)
 );
-
